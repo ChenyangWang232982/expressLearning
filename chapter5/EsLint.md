@@ -1,0 +1,1 @@
+run ./node_modules/.bin/eslint --init to create a configuration.
