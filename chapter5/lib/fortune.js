@@ -6,7 +6,7 @@ const fortunes = [
  "Whenever possible, keep it simple.",
 ];
 exports.getFortune = () => {
-    const fortune = fortunes[Math.floor(Math.random * fortunes.length)];
+    const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
     return fortune;
 }
 /**

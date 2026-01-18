@@ -1,5 +1,6 @@
-const express = require('express')
-const expressHandlebars = require('express-handlebars')
+const express = require('express');
+const expressHandlebars = require('express-handlebars');
+const handlers = require('./lib/handler');
 const app = express();
 const port = process.env.PORT || 3000
 const fortune = require('./lib/fortune')
@@ -15,26 +16,17 @@ app.use(express.static(__dirname+'/public'));  //set the files in public forlder
  */
 //order: middleeware -> route -> 4../5.. middleware server -> server
 
-app.get('/', (req,res)=>{
-    res.render('home');
-})
-
-app.get('/about', (req,res)=>{
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)]
-    res.render('about', {fortune: fortune.getFortune});
-})
+app.get('/', handlers.home)
+app.get('/about', handlers.about)
 //middleware
-app.use((req,res) => {
-    res.status(404)
-    res.render('404')
-})
+app.use(handlers.notFound)
 
-app.use((err,req,res,next)=>{
-    res.status(500)
-    res.render('500')
-})
+app.use(handlers.serverError)
 
-app.listen(port, ()=> console.log(
-    `Express started on http://localhost:${port}; ` +
-    `press Ctrl-C to terminate.`
-))
+if(require.main === module) {  //Determine if the current file is the entry point file directly executed by Node.js.
+    app.listen(port, ()=>{
+        console.log(`Express started on http://localhost:${port}` + '; press Ctrl-C to terminate.')
+    })
+} else {
+    module.exports = app
+}
