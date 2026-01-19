@@ -16,6 +16,13 @@ app.use(express.static(__dirname+'/public'));  //set the files in public forlder
  */
 //order: middleeware -> route -> 4../5.. middleware server -> server
 
+//Check header
+//app.get('/headersCheck', (req, res)=>{
+//    res.type('text/plain');
+//    const headers = Object.entries(req.headers) // Common object => Array
+//        .map(([Key, value]) => `${Key}: ${value}`);
+//    res.send(headers.join('\n'));
+//}) 
 app.get('/', handlers.home)
 app.get('/about', handlers.about)
 //middleware
