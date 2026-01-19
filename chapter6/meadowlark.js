@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000
 const fortune = require('./lib/fortune')
 // configure Handlebars view engine
+app.disable('x-powered-by');  //disable to contain server information in header
 app.engine('handlebars', expressHandlebars.engine({
     defaultLayout: 'main',  //the content in views would replace {{{body}}} in main
 }))
